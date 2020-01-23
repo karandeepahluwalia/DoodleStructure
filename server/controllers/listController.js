@@ -14,7 +14,7 @@ listController.createHeap = (req, res, next) => {
 listController.getHeap = (req, res, next) => {
   minHeap.findOne({}, {}, { sort: { created_at: -1 } }, (err, data) => {
     if (err) return console.log("find failed");
-    console.log("Here is the fetched data", data.heap);
+    console.log("Here is the fetched data", data);
     res.locals.heap = data.heap;
     return next();
   });
@@ -24,7 +24,7 @@ listController.updateHeap = (req, res, next) => {
 
   minHeap.findOneAndUpdate(
     {},
-    req.body,
+    { heap: req.body },
     { sort: { created_at: -1 } },
     (err, data) => {
       if (err) return console.log("Our update has failed ", err);

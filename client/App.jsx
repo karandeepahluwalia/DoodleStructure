@@ -91,6 +91,11 @@ class App extends Component {
           newArr[parIndex],
           newArr[currIndex]
         ];
+        fetch("http://localhost:3000/list", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(this.state.heap)
+        });
         setTimeout(
           function() {
             this.updateArray(parIndex, newArr);
@@ -107,6 +112,11 @@ class App extends Component {
       for (let el of this.state.heap) {
         newArr.push(el);
       }
+      fetch("http://localhost:3000/list", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(this.state.heap)
+      });
       newArr.pop();
       setTimeout(
         function() {
@@ -134,6 +144,11 @@ class App extends Component {
               newArr[currDel],
               newArr[leftChild]
             ];
+            fetch("http://localhost:3000/list", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(this.state.heap)
+            });
             setTimeout(
               function() {
                 this.updateDelete(leftChild, newArr);
@@ -156,6 +171,11 @@ class App extends Component {
                 newArr[currDel],
                 newArr[rightChild]
               ];
+              fetch("http://localhost:3000/list", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(this.state.heap)
+              });
               setTimeout(
                 function() {
                   this.updateDelete(rightChild, newArr);
@@ -170,6 +190,11 @@ class App extends Component {
                 newArr[currDel],
                 newArr[leftChild]
               ];
+              fetch("http://localhost:3000/list", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(this.state.heap)
+              });
               setTimeout(
                 function() {
                   this.updateDelete(leftChild, newArr);
@@ -185,6 +210,11 @@ class App extends Component {
                 newArr[currDel],
                 newArr[childToChange]
               ];
+              fetch("http://localhost:3000/list", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(this.state.heap)
+              });
               setTimeout(
                 function() {
                   this.updateDelete(childToChange, newArr);
@@ -198,6 +228,8 @@ class App extends Component {
     }
   }
   render() {
+    //console.log(this.state.heap);
+
     return (
       <center>
         <div>
