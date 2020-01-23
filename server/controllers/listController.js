@@ -5,7 +5,7 @@ const minHeap = require("../models/DSmodel");
 const listController = {};
 listController.createHeap = (req, res, next) => {
   console.log("Create heap called");
-  minHeap.create({ heap: [13, 12] }, (err, data) => {
+  minHeap.create({ heap: [] }, (err, data) => {
     if (err) return console.log("Create heap failed     ", err);
     console.log("Create heap worked");
     next();
@@ -15,12 +15,12 @@ listController.getHeap = (req, res, next) => {
   minHeap.findOne({}, {}, { sort: { created_at: -1 } }, (err, data) => {
     if (err) return console.log("find failed");
     console.log("Here is the fetched data", data.heap);
-    res.locals.heap = data;
+    res.locals.heap = data.heap;
     return next();
   });
 };
 listController.updateHeap = (req, res, next) => {
-  console.log("heap updating");
+  console.log("heap updating", req.body);
 
   minHeap.findOneAndUpdate(
     {},

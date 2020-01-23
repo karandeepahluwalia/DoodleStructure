@@ -8,7 +8,10 @@ module.exports = {
     path: path.resolve(__dirname, "dist")
   },
   devServer: {
-    contentBase: "./dist"
+    contentBase: "./dist",
+    proxy: {
+      "/list": "http://localhost:3000"
+    }
   },
   module: {
     rules: [
