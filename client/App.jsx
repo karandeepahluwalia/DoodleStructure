@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Form from "./Form.jsx";
+import Node from "./Node.jsx";
 
 class App extends Component {
   constructor() {
@@ -57,19 +58,19 @@ class App extends Component {
     this.setState({ currDel, heap });
   }
   componentDidMount() {
-    fetch("http://localhost:3000/list")
+    fetch("/list")
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
         this.setState({ heap: data });
       })
       .catch(err => {
-        console.log("Fetch failed", err);
+        //console.log("Fetch failed", err);
       });
   }
   deleteTree() {
     this.setState({ heap: [] });
-    fetch("http://localhost:3000/list", {
+    fetch("/list", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify([])
@@ -91,7 +92,7 @@ class App extends Component {
           newArr[parIndex],
           newArr[currIndex]
         ];
-        fetch("http://localhost:3000/list", {
+        fetch("/list", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(this.state.heap)
@@ -112,7 +113,7 @@ class App extends Component {
       for (let el of this.state.heap) {
         newArr.push(el);
       }
-      fetch("http://localhost:3000/list", {
+      fetch("/list", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(this.state.heap)
@@ -144,7 +145,7 @@ class App extends Component {
               newArr[currDel],
               newArr[leftChild]
             ];
-            fetch("http://localhost:3000/list", {
+            fetch("/list", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(this.state.heap)
@@ -171,7 +172,7 @@ class App extends Component {
                 newArr[currDel],
                 newArr[rightChild]
               ];
-              fetch("http://localhost:3000/list", {
+              fetch("/list", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(this.state.heap)
@@ -190,7 +191,7 @@ class App extends Component {
                 newArr[currDel],
                 newArr[leftChild]
               ];
-              fetch("http://localhost:3000/list", {
+              fetch("/list", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(this.state.heap)
@@ -210,7 +211,7 @@ class App extends Component {
                 newArr[currDel],
                 newArr[childToChange]
               ];
-              fetch("http://localhost:3000/list", {
+              fetch("/list", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(this.state.heap)
@@ -229,21 +230,36 @@ class App extends Component {
   }
   render() {
     //console.log(this.state.heap);
-
+    const nodeArray = [];
+    let count = 0;
+    let top = 0;
+    for (let el of this.state.heap) {
+      const styles = {
+        top
+      };
+      top += 50;
+      //console.log(el);
+      nodeArray.push(
+        <Node key={count++} node={count} value={el} styles={styles} />
+      );
+    }
     return (
-      <center>
-        <div>
-          <Form
-            saveText={this.saveText}
-            insertElement={this.insertElement}
-            deleteElement={this.deleteElement}
-            deleteTree={this.deleteTree}
-          />
-        </div>
-        <div>
-          <h1>{JSON.stringify(this.state.heap)}</h1>
-        </div>
-      </center>
+      <div>
+        <center>
+          <div>
+            <Form
+              saveText={this.saveText}
+              insertElement={this.insertElement}
+              deleteElement={this.deleteElement}
+              deleteTree={this.deleteTree}
+            />
+          </div>
+          <div>
+            <h1>{JSON.stringify(this.state.heap)}</h1>
+          </div>
+        </center>
+        <div>{nodeArray}</div>
+      </div>
     );
   }
 }

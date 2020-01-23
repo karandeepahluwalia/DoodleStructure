@@ -22,9 +22,14 @@ app.use(function(req, res, next) {
   next();
 });
 app.use("/list", listRouter);
-app.get("/", (req, res) => {
-  res.status(200).sendFile(path.resolve(__dirname, "../client/index.html"));
-});
+if (process.env.NODE_ENV === "production") {
+  app.get("/bundle.js", (req, res) => {
+    res.status(200).sendFile(path.resolve(__dirname, "../dist/bundle.js"));
+  });
+  app.get("/", (req, res) => {
+    res.status(200).sendFile(path.resolve(__dirname, "../dist/index.html"));
+  });
+}
 app.listen(PORT, () => {
   console.log("Listening on port 3000");
 });
